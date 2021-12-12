@@ -56,6 +56,7 @@ function DetailedPopup(props: DetailedPopupProps) {
       fullScreen={fullScreen}
       fullWidth
       maxWidth="lg"
+      scroll="paper"
       open={open}
       onClose={handleClose}
       aria-labelledby="detailed-covid-situation"
@@ -63,7 +64,7 @@ function DetailedPopup(props: DetailedPopupProps) {
       <CustomDialogTitle id="detailed-covid-situation" onClose={handleClose}>
         Detailed covid situation
       </CustomDialogTitle>
-      <DialogContent dividers sx={{ overflow: 'hidden' }}>
+      <DialogContent dividers>
         {(isLoadingCountry || isLoadingCovidData) && (
           <Box
             sx={{
@@ -111,7 +112,7 @@ function DetailedPopup(props: DetailedPopupProps) {
               </Grid>
             </Grid>
 
-            <Box sx={{ width: '100%', height: 400, mt: 4 }}>
+            <Box sx={{ width: '100%', height: 400, mt: 4, overflow: 'hidden' }}>
               <Chart data={data} />
             </Box>
           </>
