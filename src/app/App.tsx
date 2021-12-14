@@ -70,10 +70,10 @@ function App() {
     }
   };
 
-  const handleChangeTab = (tab: number) => {
-    setTab(tab);
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
     setSort(SORT_OPTIONS.DEFAULT);
-    if (tab === 0) {
+    if (newValue === 0) {
       setCountries(countries);
     } else {
       setBookmarkCountries(

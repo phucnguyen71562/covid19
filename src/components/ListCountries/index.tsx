@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import { useCountry } from 'apis/countryApi';
 import { CovidCountry, useCovidByCountry } from 'apis/covidApi';
+import Binoculars from 'assets/images/binoculars.gif';
+import CustomTabs from 'components/CustomTabs';
 import DetailedPopup from 'components/DetailedPopup';
 import DropdownMenu from 'components/DropdownMenu';
 import dayjs from 'dayjs';
@@ -49,7 +51,7 @@ export interface ListCountriesProps {
   bookmarkCountries: CovidCountry[];
   sort: number;
   tab: number;
-  handleChangeTab: (tab: number) => void;
+  handleChangeTab: (event: React.SyntheticEvent, newValue: number) => void;
   handleSortCountries: (sortBy: number) => void;
   handleBookmark: (country: CovidCountry) => void;
 }
@@ -110,63 +112,18 @@ function ListCountries(props: ListCountriesProps) {
       disableGutters={mdDown}
       sx={{
         mt: { xs: 7, md: 10 },
+        mb: 4,
       }}
     >
       <Grid container spacing={3}>
         <Grid item xs={12} md={2}>
-          <Stack
-            direction={{ xs: 'row', md: 'column' }}
-            sx={{
-              px: { xs: 2, md: 0 },
-            }}
-          >
-            <Box
-              onClick={() => handleChangeTab(0)}
-              sx={{
-                p: 2,
-                borderRight: mdDown
-                  ? 'none'
-                  : tab === 0
-                  ? '3px solid'
-                  : '1px solid',
-                borderBottom: !mdDown
-                  ? 'none'
-                  : tab === 0
-                  ? '3px solid'
-                  : '1px solid',
-                borderColor: tab === 0 ? 'primary.main' : '#e0e0e0',
-                ':hover': {
-                  cursor: 'pointer',
-                  color: 'primary.main',
-                },
-              }}
-            >
-              <Typography variant="subtitle1">All</Typography>
-            </Box>
-            <Box
-              onClick={() => handleChangeTab(1)}
-              sx={{
-                p: 2,
-                borderRight: mdDown
-                  ? 'none'
-                  : tab === 1
-                  ? '3px solid'
-                  : '1px solid',
-                borderBottom: !mdDown
-                  ? 'none'
-                  : tab === 1
-                  ? '3px solid'
-                  : '1px solid',
-                borderColor: tab === 1 ? 'primary.main' : '#e0e0e0',
-                ':hover': {
-                  cursor: 'pointer',
-                  color: 'primary.main',
-                },
-              }}
-            >
-              <Typography variant="subtitle1">Bookmark</Typography>
-            </Box>
-          </Stack>
+          <CustomTabs
+            orientation={mdDown ? 'horizontal' : 'vertical'}
+            ariaLabel="basic tabs example"
+            items={['All', 'Bookmarked']}
+            value={tab}
+            onChange={handleChangeTab}
+          />
         </Grid>
 
         <Grid item xs={12} md={10}>
@@ -212,6 +169,40 @@ function ListCountries(props: ListCountriesProps) {
               </Grid>
             </Grid>
           </Box>
+          {tab !== 0 && data?.length === 0 && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                my: 4,
+              }}
+            >
+              <Box
+                component="img"
+                src={Binoculars}
+                alt="No data"
+                sx={{
+                  width: 300,
+                  maxWidth: '100%',
+                  height: 'auto',
+                  objectFit: 'cover',
+                  borderRadius: 1,
+                  overflow: 'hidden',
+                }}
+              />
+              <Typography
+                variant="h5"
+                sx={{
+                  my: 3,
+                  fontWeight: 'bold',
+                }}
+              >
+                No country in your bookmark
+              </Typography>
+            </Box>
+          )}
           {data.map((country) => (
             <Stack
               direction="row"
