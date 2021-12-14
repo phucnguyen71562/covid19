@@ -185,8 +185,8 @@ function ListCountries(props: ListCountriesProps) {
                 alt="No data"
                 sx={{
                   width: 300,
+                  height: 225,
                   maxWidth: '100%',
-                  height: 'auto',
                   objectFit: 'cover',
                   borderRadius: 1,
                   overflow: 'hidden',
