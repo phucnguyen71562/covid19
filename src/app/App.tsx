@@ -8,7 +8,7 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import { useState } from 'react';
 
 function App() {
-  const [bookmark, setBookmark] = useLocalStorage('bookmark', []);
+  const [bookmark, setBookmark] = useLocalStorage<string[]>('bookmark', []);
   const [global, setGlobal] = useState<GlobalData | null>(null);
   const [countries, setCountries] = useState<CovidCountry[]>([]);
   const [bookmarkCountries, setBookmarkCountries] = useState<CovidCountry[]>(
@@ -77,9 +77,7 @@ function App() {
       setCountries(countries);
     } else {
       setBookmarkCountries(
-        countries.filter((country: CovidCountry) =>
-          bookmark.includes(country.ID)
-        )
+        countries.filter((country) => bookmark.includes(country.ID))
       );
     }
   };
@@ -94,9 +92,10 @@ function App() {
         <Header />
         <Hero global={global} />
         <ListCountries
-          countries={countries}
-          bookmarkCountries={bookmarkCountries}
           date={date}
+          countries={countries}
+          bookmark={bookmark}
+          bookmarkCountries={bookmarkCountries}
           sort={sort}
           tab={tab}
           handleChangeTab={handleChangeTab}

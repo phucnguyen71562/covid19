@@ -25,35 +25,19 @@ function CustomTabs(props: CustomTabsProps) {
     ...rest
   } = props;
 
-  if (orientation === 'horizontal') {
-    return (
-      <Box
-        sx={{
+  const borderStyle =
+    orientation === 'horizontal'
+      ? {
           borderBottom: 1,
           borderColor: 'divider',
-        }}
-      >
-        <Tabs
-          orientation={orientation}
-          value={value}
-          onChange={onChange}
-          {...rest}
-        >
-          {items.map((item, index) => (
-            <Tab key={item} label={item} {...a11yProps(index, ariaLabel)} />
-          ))}
-        </Tabs>
-      </Box>
-    );
-  }
+        }
+      : {
+          borderRight: 1,
+          borderColor: 'divider',
+        };
 
   return (
-    <Box
-      sx={{
-        borderRight: 1,
-        borderColor: 'divider',
-      }}
-    >
+    <Box sx={borderStyle}>
       <Tabs
         orientation={orientation}
         value={value}
@@ -61,7 +45,15 @@ function CustomTabs(props: CustomTabsProps) {
         {...rest}
       >
         {items.map((item, index) => (
-          <Tab key={item} label={item} {...a11yProps(index, ariaLabel)} />
+          <Tab
+            key={item}
+            label={item}
+            disableRipple
+            sx={{
+              alignItems: 'flex-start',
+            }}
+            {...a11yProps(index, ariaLabel)}
+          />
         ))}
       </Tabs>
     </Box>

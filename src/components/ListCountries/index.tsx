@@ -16,7 +16,6 @@ import CustomTabs from 'components/CustomTabs';
 import DetailedPopup from 'components/DetailedPopup';
 import DropdownMenu from 'components/DropdownMenu';
 import dayjs from 'dayjs';
-import useLocalStorage from 'hooks/useLocalStorage';
 import { useState } from 'react';
 
 export const SORT_OPTIONS = {
@@ -48,6 +47,7 @@ const OPTIONS = [
 export interface ListCountriesProps {
   date: string;
   countries: CovidCountry[];
+  bookmark: string[];
   bookmarkCountries: CovidCountry[];
   sort: number;
   tab: number;
@@ -60,6 +60,7 @@ function ListCountries(props: ListCountriesProps) {
   const {
     date,
     countries,
+    bookmark,
     bookmarkCountries,
     sort,
     tab,
@@ -69,8 +70,6 @@ function ListCountries(props: ListCountriesProps) {
   } = props;
 
   const mdDown = useMediaQuery('(max-width:960px)');
-
-  const [bookmark] = useLocalStorage('bookmark', []);
 
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
@@ -226,6 +225,9 @@ function ListCountries(props: ListCountriesProps) {
                 defaultChecked={bookmark.includes(country.ID)}
                 onChange={() => handleBookmark(country)}
                 sx={{
+                  ':hover svg': {
+                    color: 'warning.light',
+                  },
                   '&.Mui-checked': {
                     color: 'warning.light',
                   },
